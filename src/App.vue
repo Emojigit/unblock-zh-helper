@@ -657,7 +657,7 @@ export default {
     mailContent() {
       let allText = this.mailContentCore;
 
-      allText += '\n\n' + this.mt('mail-reply-to-all');
+      allText += '\n\n' + this.mt('mail-reply-to-all', [this.mailing_list]);
       allText += '\n\n' + 'User:' + mw.config.get('wgUserName');
 
       return allText;
@@ -744,10 +744,11 @@ export default {
 
       if (this.archiveUrl) {
         let m = this.archiveUrl.match(
-          /https?:\/\/lists\.wikimedia\.org\/hyperkitty\/(list\/unblock-zh@lists\.wikimedia\.org\/(?:message|thread)\/[^/]+\/?)/
+          /https?:\/\/lists\.wikimedia\.org\/hyperkitty\/(list\/(unblock-zh|wikipedia-zh-ipbe)@lists\.wikimedia\.org\/(?:message|thread)\/[^/]+\/?)/
         );
         if (m) {
-          this.summary = '[[listarchive:' + m[1] + '|' + this.$t('unblock-zh-apply') + ']]';
+          this.mailing_list = m[2];
+          this.summary = '[[listarchive:' + m[1] + '|' + this.$t('unblock-zh-apply', [this.mailing_list]) + ']]';
         } else {
           alert(this.$t('mailopt-archive-wrong-format'));
           return;
